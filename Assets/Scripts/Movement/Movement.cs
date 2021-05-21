@@ -9,7 +9,7 @@ public class Movement : MonoBehaviour
     //public Animator animator;
     public InputReader reader;
 
-    private Vector2 direction = Vector2.zero;
+    private Vector2 dir = Vector2.zero;
     private Vector2 lastDirection = Vector2.zero;
     [SerializeField]
     private LayerMask layer;
@@ -41,12 +41,15 @@ public class Movement : MonoBehaviour
 
     public void Update()
     {
-        rb.velocity = direction;
+        dir.y = rb.velocity.y;
+        Debug.Log("1 Rb.Velocity in the y: " + rb.velocity.y);
+        rb.velocity = dir;
+        Debug.Log("2 Rb.Velocity in the y: " + rb.velocity.y);   
     }
 
     public void Move(Vector2 direction)
     {
-        this.direction = direction * moveSpeed;
+        dir.x = direction.x * moveSpeed;
 
         if (direction != Vector2.zero)
         {

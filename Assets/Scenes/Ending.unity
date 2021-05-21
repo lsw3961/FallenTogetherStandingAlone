@@ -2996,7 +2996,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e9088ddd9aa0444992906ba33cb8d7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 10.66
   rb: {fileID: 1673950537}
   reader: {fileID: 11400000, guid: 051f949d8b1a2a14894b9c4ca55ce0ce, type: 2}
   layer:
@@ -3043,7 +3043,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 2.33
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
