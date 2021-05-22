@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 public class Movement : MonoBehaviour
 {
     public float moveSpeed = 5;
+    [SerializeField]
+    private float distance;
     public Rigidbody2D rb;
     //public Animator animator;
     public InputReader reader;
@@ -16,16 +18,26 @@ public class Movement : MonoBehaviour
     private Vector2 lastDirection = Vector2.zero;
     [SerializeField]
     private LayerMask layer;
+    [SerializeField]
+    private LayerMask dragable;
     public LayerMask groundLayer;
+
+    public GameObject BoxBeingDragged;
     private void OnEnable()
     {
         reader.moveEvent += Move;
         reader.jumpEvent += Jump;
+        reader.RightClick += PushAndPull;
+
+
     }
     private void OnDisable()
     {
         reader.moveEvent -= Move;
         reader.jumpEvent -= Jump;
+        reader.RightClick -= PushAndPull;
+
+        reader.releaseEvent -= Released;
     }
 
     public void Update()
@@ -82,6 +94,34 @@ public class Movement : MonoBehaviour
         {
             return false;
         }
+    }
+
+    public void PushAndPull()
+    {
+        Physics2D.queriesStartInColliders = false;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, lastDirection, distance, dragable);
+
+        if (hit.collider != null)
+        {
+            Debug.Log("get I get here?");
+            BoxBeingDragged = hit.collider.gameObject;
+
+            BoxBeingDragged.GetComponent<FixedJoint2D>().enabled = true;
+            BoxBeingDragged.GetComponent<FixedJoint2D>().connectedBody = this.GetComponent<Rigidbody2D>();
+            reader.releaseEvent += Released;
+
+        }
+    }
+    public void Released()
+    {
+        Debug.Log("Testing");
+        BoxBeingDragged.GetComponent<FixedJoint2D>().enabled = false;
+    }
+
+    public void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawRay(transform.position,lastDirection);
     }
 }
 

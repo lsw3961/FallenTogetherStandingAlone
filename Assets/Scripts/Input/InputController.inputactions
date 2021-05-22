@@ -22,6 +22,14 @@
                     "interactions": ""
                 },
                 {
+                    "name": "Release",
+                    "type": "Button",
+                    "id": "9a63c94d-b517-477c-902e-5c8aeac5b86f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
                     "name": "Shoot",
                     "type": "Value",
                     "id": "cd4e2369-4369-4a27-8a49-001e0de3d208",
@@ -117,7 +125,7 @@
                     "name": "",
                     "id": "deb0a1ec-6853-48d9-838a-7d002fa22fb6",
                     "path": "<Mouse>/rightButton",
-                    "interactions": "",
+                    "interactions": "Press,Hold",
                     "processors": "",
                     "groups": "",
                     "action": "Drag",
@@ -154,6 +162,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e2a76985-ffad-4222-8855-4f5974734be5",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "Press(behavior=1)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Release",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
