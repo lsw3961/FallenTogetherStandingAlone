@@ -22,7 +22,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Release",
+                    "name": "DragRelease",
                     "type": "Button",
                     "id": "9a63c94d-b517-477c-902e-5c8aeac5b86f",
                     "expectedControlType": "Button",
@@ -31,9 +31,17 @@
                 },
                 {
                     "name": "Shoot",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "cd4e2369-4369-4a27-8a49-001e0de3d208",
-                    "expectedControlType": "",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "ShootRelease",
+                    "type": "Button",
+                    "id": "32fbda74-13bf-48cf-aa04-e82a43965e80",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 },
@@ -136,7 +144,7 @@
                     "name": "",
                     "id": "996e374e-70bc-408c-affb-d184496f8fdd",
                     "path": "<Mouse>/leftButton",
-                    "interactions": "",
+                    "interactions": "Hold",
                     "processors": "",
                     "groups": "",
                     "action": "Shoot",
@@ -172,7 +180,18 @@
                     "interactions": "Press(behavior=1)",
                     "processors": "",
                     "groups": "",
-                    "action": "Release",
+                    "action": "DragRelease",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "af80edce-de8d-4354-8b55-12124e5a96a7",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "Press(behavior=1)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShootRelease",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

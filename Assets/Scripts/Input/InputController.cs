@@ -35,7 +35,7 @@ public class @InputController : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Release"",
+                    ""name"": ""DragRelease"",
                     ""type"": ""Button"",
                     ""id"": ""9a63c94d-b517-477c-902e-5c8aeac5b86f"",
                     ""expectedControlType"": ""Button"",
@@ -44,9 +44,17 @@ public class @InputController : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""Shoot"",
-                    ""type"": ""Value"",
+                    ""type"": ""Button"",
                     ""id"": ""cd4e2369-4369-4a27-8a49-001e0de3d208"",
-                    ""expectedControlType"": """",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""ShootRelease"",
+                    ""type"": ""Button"",
+                    ""id"": ""32fbda74-13bf-48cf-aa04-e82a43965e80"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
                 },
@@ -149,7 +157,7 @@ public class @InputController : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""996e374e-70bc-408c-affb-d184496f8fdd"",
                     ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
+                    ""interactions"": ""Hold"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Shoot"",
@@ -185,7 +193,18 @@ public class @InputController : IInputActionCollection, IDisposable
                     ""interactions"": ""Press(behavior=1)"",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Release"",
+                    ""action"": ""DragRelease"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""af80edce-de8d-4354-8b55-12124e5a96a7"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": ""Press(behavior=1)"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShootRelease"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -198,8 +217,9 @@ public class @InputController : IInputActionCollection, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Drag = m_Player.FindAction("Drag", throwIfNotFound: true);
-        m_Player_Release = m_Player.FindAction("Release", throwIfNotFound: true);
+        m_Player_DragRelease = m_Player.FindAction("DragRelease", throwIfNotFound: true);
         m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
+        m_Player_ShootRelease = m_Player.FindAction("ShootRelease", throwIfNotFound: true);
         m_Player_Point = m_Player.FindAction("Point", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
     }
@@ -253,8 +273,9 @@ public class @InputController : IInputActionCollection, IDisposable
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Drag;
-    private readonly InputAction m_Player_Release;
+    private readonly InputAction m_Player_DragRelease;
     private readonly InputAction m_Player_Shoot;
+    private readonly InputAction m_Player_ShootRelease;
     private readonly InputAction m_Player_Point;
     private readonly InputAction m_Player_Jump;
     public struct PlayerActions
@@ -263,8 +284,9 @@ public class @InputController : IInputActionCollection, IDisposable
         public PlayerActions(@InputController wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Drag => m_Wrapper.m_Player_Drag;
-        public InputAction @Release => m_Wrapper.m_Player_Release;
+        public InputAction @DragRelease => m_Wrapper.m_Player_DragRelease;
         public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
+        public InputAction @ShootRelease => m_Wrapper.m_Player_ShootRelease;
         public InputAction @Point => m_Wrapper.m_Player_Point;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
@@ -282,12 +304,15 @@ public class @InputController : IInputActionCollection, IDisposable
                 @Drag.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrag;
                 @Drag.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrag;
                 @Drag.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrag;
-                @Release.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRelease;
-                @Release.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRelease;
-                @Release.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRelease;
+                @DragRelease.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDragRelease;
+                @DragRelease.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDragRelease;
+                @DragRelease.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDragRelease;
                 @Shoot.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
                 @Shoot.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
                 @Shoot.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
+                @ShootRelease.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShootRelease;
+                @ShootRelease.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShootRelease;
+                @ShootRelease.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShootRelease;
                 @Point.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPoint;
                 @Point.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPoint;
                 @Point.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPoint;
@@ -304,12 +329,15 @@ public class @InputController : IInputActionCollection, IDisposable
                 @Drag.started += instance.OnDrag;
                 @Drag.performed += instance.OnDrag;
                 @Drag.canceled += instance.OnDrag;
-                @Release.started += instance.OnRelease;
-                @Release.performed += instance.OnRelease;
-                @Release.canceled += instance.OnRelease;
+                @DragRelease.started += instance.OnDragRelease;
+                @DragRelease.performed += instance.OnDragRelease;
+                @DragRelease.canceled += instance.OnDragRelease;
                 @Shoot.started += instance.OnShoot;
                 @Shoot.performed += instance.OnShoot;
                 @Shoot.canceled += instance.OnShoot;
+                @ShootRelease.started += instance.OnShootRelease;
+                @ShootRelease.performed += instance.OnShootRelease;
+                @ShootRelease.canceled += instance.OnShootRelease;
                 @Point.started += instance.OnPoint;
                 @Point.performed += instance.OnPoint;
                 @Point.canceled += instance.OnPoint;
@@ -324,8 +352,9 @@ public class @InputController : IInputActionCollection, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnDrag(InputAction.CallbackContext context);
-        void OnRelease(InputAction.CallbackContext context);
+        void OnDragRelease(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
+        void OnShootRelease(InputAction.CallbackContext context);
         void OnPoint(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
     }

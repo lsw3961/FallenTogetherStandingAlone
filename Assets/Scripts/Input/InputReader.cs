@@ -12,7 +12,8 @@ public class InputReader : ScriptableObject, InputController.IPlayerActions
     public event UnityAction LeftClick = delegate { };
     public event UnityAction RightClick = delegate { };
     public event UnityAction jumpEvent = delegate { };
-    public event UnityAction releaseEvent = delegate { };
+    public event UnityAction rightReleaseEvent = delegate { };
+    public event UnityAction leftReleaseEvent = delegate { };
 
     private InputController gameInput;
     private Vector2 mousePosition;
@@ -45,6 +46,14 @@ public class InputReader : ScriptableObject, InputController.IPlayerActions
         moveEvent.Invoke(context.ReadValue<Vector2>());
     }
 
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+        {
+            jumpEvent.Invoke();
+        }
+    }
+
     public void OnInteract(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed)
@@ -60,9 +69,16 @@ public class InputReader : ScriptableObject, InputController.IPlayerActions
 
     public void OnShoot(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Performed && context.ReadValueAsButton())
+        if (context.phase == InputActionPhase.Performed)
         {
             LeftClick.Invoke();
+        }
+    }
+    public void OnShootRelease(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+        {
+            leftReleaseEvent.Invoke();
         }
     }
 
@@ -74,19 +90,13 @@ public class InputReader : ScriptableObject, InputController.IPlayerActions
         }
     }
 
-    public void OnJump(InputAction.CallbackContext context)
+    public void OnDragRelease(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed)
         {
-            jumpEvent.Invoke();
+            rightReleaseEvent.Invoke();
         }
     }
 
-    public void OnRelease(InputAction.CallbackContext context)
-    {
-        if (context.phase == InputActionPhase.Performed)
-        {
-            releaseEvent.Invoke();
-        }
-    }
+
 }

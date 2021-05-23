@@ -37,7 +37,7 @@ public class Movement : MonoBehaviour
         reader.jumpEvent -= Jump;
         reader.RightClick -= PushAndPull;
 
-        reader.releaseEvent -= Released;
+        reader.rightReleaseEvent -= Released;
     }
 
     public void Update()
@@ -108,7 +108,7 @@ public class Movement : MonoBehaviour
 
             BoxBeingDragged.GetComponent<FixedJoint2D>().enabled = true;
             BoxBeingDragged.GetComponent<FixedJoint2D>().connectedBody = this.GetComponent<Rigidbody2D>();
-            reader.releaseEvent += Released;
+            reader.rightReleaseEvent += Released;
 
         }
     }
