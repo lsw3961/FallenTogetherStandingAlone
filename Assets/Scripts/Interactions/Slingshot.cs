@@ -18,6 +18,10 @@ public class Slingshot : MonoBehaviour
         Vector2 direction = mousePosition - SlingshotPosition;
 
         transform.right = direction;
+        if (newShot != null)
+        {
+            newShot.transform.position = shotPoint.position;
+        }
     }
 
     private void OnEnable()
