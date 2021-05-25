@@ -60,6 +60,14 @@
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Interact",
+                    "type": "Button",
+                    "id": "9882a65f-e4bf-4e60-9dea-cc292fe4b934",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -192,6 +200,63 @@
                     "processors": "",
                     "groups": "",
                     "action": "ShootRelease",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5a50dd96-a2b6-4e1b-9eb4-4249c54317d3",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "UI",
+            "id": "8837a84e-b4a5-4ae0-ba72-7f33e63ea459",
+            "actions": [
+                {
+                    "name": "Point",
+                    "type": "Value",
+                    "id": "1b1bdba7-1e30-4ca5-9821-f3b28a805b64",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Left Click",
+                    "type": "Button",
+                    "id": "907169bc-2308-41d8-aac5-990ce53c81b3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "6e9e4dbe-be61-4168-a958-8ad4e00ee402",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Point",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "edb8bfcf-0d76-4cd1-b9f4-989fc0c5f8da",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Left Click",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

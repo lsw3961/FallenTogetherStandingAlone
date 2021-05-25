@@ -4,9 +4,41 @@ using UnityEngine;
 
 public class NPC : MonoBehaviour
 {
-    public void testing()
+    [SerializeField] Dialogue dialogue;
+    [SerializeField] DialogueManager dialogueManager;
+    [SerializeField] private bool buffer;
+    [SerializeField] private bool hasChatStarted = false;
+    [SerializeField] InputReader reader;
+
+    public void StartChat()
     {
-        Debug.Log("Testing method activated");
+        if (buffer)
+        {
+            buffer = false;
+            return;
+        }
+
+        if (hasChatStarted)
+        {
+            OnTalk();
+        }
+        else
+        {
+            reader.EnableDialogueInput();
+            hasChatStarted = true;
+            dialogueManager.Initialize(dialogue);
+        }
+    }
+
+    public void OnTalk()
+    {
+        hasChatStarted = true;
+        dialogueManager.PushText();
+        if (hasChatStarted == false)
+        {
+            buffer = true;
+            reader.EnablePlayerInput();
+        }
     }
 
 }

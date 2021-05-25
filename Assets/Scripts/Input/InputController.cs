@@ -73,6 +73,14 @@ public class @InputController : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""9882a65f-e4bf-4e60-9dea-cc292fe4b934"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -207,6 +215,63 @@ public class @InputController : IInputActionCollection, IDisposable
                     ""action"": ""ShootRelease"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5a50dd96-a2b6-4e1b-9eb4-4249c54317d3"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""UI"",
+            ""id"": ""8837a84e-b4a5-4ae0-ba72-7f33e63ea459"",
+            ""actions"": [
+                {
+                    ""name"": ""Point"",
+                    ""type"": ""Value"",
+                    ""id"": ""1b1bdba7-1e30-4ca5-9821-f3b28a805b64"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Left Click"",
+                    ""type"": ""Button"",
+                    ""id"": ""907169bc-2308-41d8-aac5-990ce53c81b3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""6e9e4dbe-be61-4168-a958-8ad4e00ee402"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Point"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""edb8bfcf-0d76-4cd1-b9f4-989fc0c5f8da"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Left Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -222,6 +287,11 @@ public class @InputController : IInputActionCollection, IDisposable
         m_Player_ShootRelease = m_Player.FindAction("ShootRelease", throwIfNotFound: true);
         m_Player_Point = m_Player.FindAction("Point", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
+        m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        // UI
+        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+        m_UI_Point = m_UI.FindAction("Point", throwIfNotFound: true);
+        m_UI_LeftClick = m_UI.FindAction("Left Click", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -278,6 +348,7 @@ public class @InputController : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_ShootRelease;
     private readonly InputAction m_Player_Point;
     private readonly InputAction m_Player_Jump;
+    private readonly InputAction m_Player_Interact;
     public struct PlayerActions
     {
         private @InputController m_Wrapper;
@@ -289,6 +360,7 @@ public class @InputController : IInputActionCollection, IDisposable
         public InputAction @ShootRelease => m_Wrapper.m_Player_ShootRelease;
         public InputAction @Point => m_Wrapper.m_Player_Point;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
+        public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -319,6 +391,9 @@ public class @InputController : IInputActionCollection, IDisposable
                 @Jump.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
+                @Interact.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
+                @Interact.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
+                @Interact.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -344,10 +419,54 @@ public class @InputController : IInputActionCollection, IDisposable
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
+                @Interact.started += instance.OnInteract;
+                @Interact.performed += instance.OnInteract;
+                @Interact.canceled += instance.OnInteract;
             }
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // UI
+    private readonly InputActionMap m_UI;
+    private IUIActions m_UIActionsCallbackInterface;
+    private readonly InputAction m_UI_Point;
+    private readonly InputAction m_UI_LeftClick;
+    public struct UIActions
+    {
+        private @InputController m_Wrapper;
+        public UIActions(@InputController wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Point => m_Wrapper.m_UI_Point;
+        public InputAction @LeftClick => m_Wrapper.m_UI_LeftClick;
+        public InputActionMap Get() { return m_Wrapper.m_UI; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
+        public void SetCallbacks(IUIActions instance)
+        {
+            if (m_Wrapper.m_UIActionsCallbackInterface != null)
+            {
+                @Point.started -= m_Wrapper.m_UIActionsCallbackInterface.OnPoint;
+                @Point.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnPoint;
+                @Point.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnPoint;
+                @LeftClick.started -= m_Wrapper.m_UIActionsCallbackInterface.OnLeftClick;
+                @LeftClick.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnLeftClick;
+                @LeftClick.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnLeftClick;
+            }
+            m_Wrapper.m_UIActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Point.started += instance.OnPoint;
+                @Point.performed += instance.OnPoint;
+                @Point.canceled += instance.OnPoint;
+                @LeftClick.started += instance.OnLeftClick;
+                @LeftClick.performed += instance.OnLeftClick;
+                @LeftClick.canceled += instance.OnLeftClick;
+            }
+        }
+    }
+    public UIActions @UI => new UIActions(this);
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
@@ -357,5 +476,11 @@ public class @InputController : IInputActionCollection, IDisposable
         void OnShootRelease(InputAction.CallbackContext context);
         void OnPoint(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
+    }
+    public interface IUIActions
+    {
+        void OnPoint(InputAction.CallbackContext context);
+        void OnLeftClick(InputAction.CallbackContext context);
     }
 }

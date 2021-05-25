@@ -4,16 +4,17 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 [CreateAssetMenu(fileName ="Input Reader",menuName = "Input/Input Reader")]
-public class InputReader : ScriptableObject, InputController.IPlayerActions
+public class InputReader : ScriptableObject, InputController.IPlayerActions, InputController.IUIActions
 {
 
-    public event UnityAction<Vector2> moveEvent = delegate { };
-    public event UnityAction interactEvent = delegate { };
+    public event UnityAction<Vector2> MoveEvent = delegate { };
+    public event UnityAction InteractEvent = delegate { };
     public event UnityAction LeftClick = delegate { };
     public event UnityAction RightClick = delegate { };
-    public event UnityAction jumpEvent = delegate { };
-    public event UnityAction rightReleaseEvent = delegate { };
-    public event UnityAction leftReleaseEvent = delegate { };
+    public event UnityAction JumpEvent = delegate { };
+    public event UnityAction RightReleaseEvent = delegate { };
+    public event UnityAction LeftReleaseEvent = delegate { };
+    public event UnityAction Press = delegate { };
 
     private InputController gameInput;
     private Vector2 mousePosition;
@@ -32,25 +33,33 @@ public class InputReader : ScriptableObject, InputController.IPlayerActions
         {
             gameInput = new InputController();
             gameInput.Player.SetCallbacks(this);
+            gameInput.UI.SetCallbacks(this);
         }
         EnablePlayerInput();
+        gameInput.UI.Enable();
     }
 
     public void EnablePlayerInput()
     {
         gameInput.Player.Enable();
+        gameInput.UI.Disable();
+    }
+    public void EnableDialogueInput()
+    {
+        gameInput.Player.Disable();
+        gameInput.UI.Enable();
     }
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        moveEvent.Invoke(context.ReadValue<Vector2>());
+        MoveEvent.Invoke(context.ReadValue<Vector2>());
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed)
         {
-            jumpEvent.Invoke();
+            JumpEvent.Invoke();
         }
     }
 
@@ -58,7 +67,7 @@ public class InputReader : ScriptableObject, InputController.IPlayerActions
     {
         if (context.phase == InputActionPhase.Performed)
         {
-            interactEvent.Invoke();
+            InteractEvent.Invoke();
         }
     }
 
@@ -78,7 +87,7 @@ public class InputReader : ScriptableObject, InputController.IPlayerActions
     {
         if (context.phase == InputActionPhase.Performed)
         {
-            leftReleaseEvent.Invoke();
+            LeftReleaseEvent.Invoke();
         }
     }
 
@@ -94,9 +103,15 @@ public class InputReader : ScriptableObject, InputController.IPlayerActions
     {
         if (context.phase == InputActionPhase.Performed)
         {
-            rightReleaseEvent.Invoke();
+            RightReleaseEvent.Invoke();
         }
     }
 
-
+    public void OnLeftClick(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+        {
+            Press.Invoke();
+        }
+    }
 }

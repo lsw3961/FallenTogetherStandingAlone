@@ -5,9 +5,20 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Response", menuName = "Dialogue/Response")]
 public class Response : ScriptableObject
 {
-    [TextArea]
+
+    [SerializeField]
     string responseDialogue;
+    [SerializeField]
     Dialogue dialogue;
 
+    public string ResponsibleDialogue
+    {
+        get { return responseDialogue; }
+    }
+
+    public Dialogue Dialogue
+    {
+        get { return dialogue; }
+    }
 
 }

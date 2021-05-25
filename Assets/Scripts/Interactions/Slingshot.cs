@@ -27,12 +27,12 @@ public class Slingshot : MonoBehaviour
     private void OnEnable()
     {
         reader.LeftClick += Aim;
-        reader.leftReleaseEvent += Fire;
+        reader.LeftReleaseEvent += Fire;
     }
     public void OnDisable()
     {
         reader.LeftClick -= Aim;
-        reader.leftReleaseEvent -= Fire;
+        reader.LeftReleaseEvent -= Fire;
     }
 
     public void Aim()

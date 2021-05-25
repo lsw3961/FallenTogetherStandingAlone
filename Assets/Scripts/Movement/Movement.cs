@@ -4,48 +4,88 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class Movement : MonoBehaviour
 {
-    public float moveSpeed = 5;
+
+    public Rigidbody2D rb;
+    public InputReader reader;
+
     [SerializeField]
     private float distance;
-    public Rigidbody2D rb;
-    //public Animator animator;
-    public InputReader reader;
+    public float moveSpeed = 5;
+    private Vector2 dir = Vector2.zero;
+    private Vector2 lastDirection = Vector2.zero;
+
     [SerializeField]
     private float jumpForce;
     [SerializeField]
     private float playerToGroundDistance;
-    private Vector2 dir = Vector2.zero;
-    private Vector2 lastDirection = Vector2.zero;
-    [SerializeField]
-    private LayerMask layer;
+
     [SerializeField]
     private LayerMask dragable;
+    [SerializeField]
+    public LayerMask interactableMask;
     public LayerMask groundLayer;
 
+
+    private List<Interactable> interactables;
     public GameObject BoxBeingDragged;
+
+    #region Enable & Disable
     private void OnEnable()
     {
-        reader.moveEvent += Move;
-        reader.jumpEvent += Jump;
+        reader.MoveEvent += Move;
+        reader.JumpEvent += Jump;
         reader.RightClick += PushAndPull;
+        reader.InteractEvent += Interact;
 
 
     }
+
     private void OnDisable()
     {
-        reader.moveEvent -= Move;
-        reader.jumpEvent -= Jump;
+        reader.MoveEvent -= Move;
+        reader.JumpEvent -= Jump;
         reader.RightClick -= PushAndPull;
-
-        reader.rightReleaseEvent -= Released;
+        reader.InteractEvent -= Interact;
+        reader.RightReleaseEvent -= Released;
     }
 
+    #endregion
+
+    #region Unity Methods
     public void Update()
     {
         dir.y = rb.velocity.y;
         rb.velocity = dir;
+
+
+
     }
 
+    public void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawRay(transform.position, lastDirection);
+    }
+
+    #endregion
+
+    #region Interact(E)
+    public void Interact()
+    {
+        RaycastHit2D hit = Physics2D.Raycast((Vector2)this.transform.position, lastDirection, .75f, interactableMask);
+
+        if (hit.collider != null)
+        {
+            Interactable i = hit.collider.gameObject.GetComponent<Interactable>();
+            if (i != null)
+            {
+                i.Event.Invoke(this);
+            }
+        }
+    }
+    #endregion
+
+    #region Movement(WASD)
     public void Move(Vector2 direction)
     {
         dir.x = direction.x * moveSpeed;
@@ -68,26 +108,25 @@ public class Movement : MonoBehaviour
 
 
     }
+    #endregion
 
+    #region Jump(Spacebar)
     public void Jump()
     {
-        Debug.Log("Jump");
+        //Debug.Log("Jump");
         if (IsGrounded())
         {
-            
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
     }
 
-
-
     public bool IsGrounded()
     {
-        Debug.Log("Jump2");
+        //Debug.Log("Jump2");
 
-        if (Physics2D.Raycast(this.transform.position, Vector2.down, playerToGroundDistance, groundLayer.value))
+        if (Physics2D.Raycast(this.transform.position, Vector2.down, playerToGroundDistance, groundLayer.value)|| Physics2D.Raycast(this.transform.position, Vector2.down, playerToGroundDistance, dragable.value))
         {
-            Debug.Log("jump3");
+            //Debug.Log("jump3");
             return true;
         }
         else
@@ -96,6 +135,9 @@ public class Movement : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Drag(RMB)
     public void PushAndPull()
     {
         Physics2D.queriesStartInColliders = false;
@@ -108,21 +150,20 @@ public class Movement : MonoBehaviour
 
             BoxBeingDragged.GetComponent<FixedJoint2D>().enabled = true;
             BoxBeingDragged.GetComponent<FixedJoint2D>().connectedBody = this.GetComponent<Rigidbody2D>();
-            reader.rightReleaseEvent += Released;
+            reader.RightReleaseEvent += Released;
 
         }
     }
+
     public void Released()
     {
         Debug.Log("Testing");
         BoxBeingDragged.GetComponent<FixedJoint2D>().enabled = false;
     }
 
-    public void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawRay(transform.position,lastDirection);
-    }
+    #endregion
+
+
 }
 
 
