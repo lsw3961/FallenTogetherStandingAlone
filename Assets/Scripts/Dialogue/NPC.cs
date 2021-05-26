@@ -17,9 +17,9 @@ public class NPC : MonoBehaviour
             buffer = false;
             return;
         }
-
         if (hasChatStarted)
         {
+            //Debug.Log("Pressing button works");
             OnTalk();
         }
         else
@@ -32,8 +32,7 @@ public class NPC : MonoBehaviour
 
     public void OnTalk()
     {
-        hasChatStarted = true;
-        dialogueManager.PushText();
+        hasChatStarted = dialogueManager.PushText();
         if (hasChatStarted == false)
         {
             buffer = true;
