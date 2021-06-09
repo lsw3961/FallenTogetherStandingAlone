@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -26,17 +27,22 @@ public class InputReader : ScriptableObject, InputController.IPlayerActions, Inp
             return mousePosition;
         }
     }
-
-    private void OnEnable()
+    public void OnEnable()
     {
         if (gameInput == null)
         {
             gameInput = new InputController();
             gameInput.Player.SetCallbacks(this);
             gameInput.UI.SetCallbacks(this);
+            if (gameInput == null)
+            {
+                Debug.LogError("Input reader is null.");
+            }
         }
+        Debug.LogError("Input reader has been made.");
         EnablePlayerInput();
-        gameInput.UI.Enable();
+        Debug.LogError("input reader has enabled player Input");
+        //gameInput.UI.Enable();
     }
 
     public void EnablePlayerInput()

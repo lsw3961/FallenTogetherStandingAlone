@@ -6,15 +6,15 @@ public class DialogueManager : MonoBehaviour
 {
     [SerializeField] Text targetName;
     [SerializeField] Text targetText;
-    [SerializeField] Button option1;
-    [SerializeField] Button option2;
+    public Button option1;
+    public Button option2;
     [Range(0f, 1f)]
     [SerializeField] float visableTextPercentage;
     [SerializeField] float timerPerLetter = .05f;
     float totalTime, currentTime;
     string currentLine;
 
-    Dialogue currentDialogue;
+    public Dialogue currentDialogue;
     int currentLineNum;
 
     [SerializeField] InputReader reader;
@@ -26,18 +26,18 @@ public class DialogueManager : MonoBehaviour
 
     public bool PushText()
     {
-        Debug.Log("Push Text Current Dialogue options count: " + currentDialogue.dialogue.Count);
-        Debug.Log("Push Text currentLineNum: " + currentLineNum);
+        //Debug.Log("Push Text Current Dialogue options count: " + currentDialogue.dialogue.Count);
+        //Debug.Log("Push Text currentLineNum: " + currentLineNum);
         if (visableTextPercentage < 1f)
         {
-            Debug.Log("Reached First");
+            //Debug.Log("Reached First");
             visableTextPercentage = 1f;
             UpdateText();
             return true;
         }
         if (currentLineNum >= currentDialogue.dialogue.Count)
         {
-            Debug.Log("Being Reached");
+            //Debug.Log("Being Reached");
             Conclude();
             return false;
         }
@@ -86,19 +86,13 @@ public class DialogueManager : MonoBehaviour
 
     private void Conclude()
     {
-        Debug.Log("Conclude method. Current Dialogue Response Count: " + currentDialogue.responses.Count);
-        if (currentDialogue.responses.Count < 1)
+        if (currentDialogue.responses.Count == 0)
         {
             Show(false);
             reader.EnablePlayerInput();
         }
-        else
-        {
-            option1.GetComponentInChildren<Text>().text = currentDialogue.responses[0].ResponsibleDialogue;
-            option2.GetComponentInChildren<Text>().text = currentDialogue.responses[1].ResponsibleDialogue;
-            ButtonHelper(true);
 
-        }
+
     }
 
     private void Show(bool conditonal)
@@ -106,31 +100,45 @@ public class DialogueManager : MonoBehaviour
         gameObject.SetActive(conditonal);
     }
 
+    public void ButtonHelper(bool onOrOff)
+    {
+        option1.gameObject.SetActive(onOrOff);
+        option2.gameObject.SetActive(onOrOff);
+    }
+    public void SetButtons()
+    {
+        Debug.Log("Set buttons is being reached");
+        option1.GetComponentInChildren<Text>().text = currentDialogue.responses[0].ResponsibleDialogue;
+        option2.GetComponentInChildren<Text>().text = currentDialogue.responses[1].ResponsibleDialogue;
+        ButtonHelper(true);
+    }
 
     public void Option1()
     {
-        reader.EnableDialogueInput();
-        currentDialogue = currentDialogue.responses[0].Dialogue;
-        Debug.Log("Option 1 Current Dialogue options count: " + currentDialogue.responses.Count);
-        currentLineNum = 0;
-        targetName.text = currentDialogue.Name;
-        ButtonHelper(false);
-        Cycle();
+        Debug.Log("Hit");
+        if (currentDialogue.responses[0].Dialogue != null)
+        {
+            currentDialogue = currentDialogue.responses[0].Dialogue;
+            ButtonHelper(false);
+            Initialize(currentDialogue);
+        }
+        else
+        {
+            buttonConclude();
+        }
     }
 
     public void Option2()
     {
-        reader.EnableDialogueInput();
         currentDialogue = currentDialogue.responses[1].Dialogue;
-        currentLineNum = 0;
-        targetName.text = currentDialogue.Name;
         ButtonHelper(false);
-        Cycle();
+        Initialize(currentDialogue);
     }
 
-    private void ButtonHelper(bool onOrOff)
+    public void buttonConclude()
     {
-        option1.gameObject.SetActive(onOrOff);
-        option2.gameObject.SetActive(onOrOff);
+        ButtonHelper(false);
+        Show(false);
+        reader.EnablePlayerInput();
     }
 }
