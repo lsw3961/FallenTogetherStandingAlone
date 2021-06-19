@@ -11,6 +11,8 @@ public class Movement : MonoBehaviour
     [SerializeField]
     private float distance;
     public float moveSpeed = 5;
+    [SerializeField]
+    private float yOffset;
     private Vector2 dir = Vector2.zero;
     private Vector2 lastDirection = Vector2.zero;
 
@@ -35,8 +37,8 @@ public class Movement : MonoBehaviour
         reader.MoveEvent += Move;
         reader.JumpEvent += Jump;
         reader.RightClick += PushAndPull;
-        reader.InteractEvent += Interact;
-        reader.Press += LMBPress;
+       // reader.InteractEvent += Interact;
+        //reader.Press += LMBPress;
 
 
     }
@@ -46,7 +48,7 @@ public class Movement : MonoBehaviour
         reader.MoveEvent -= Move;
         reader.JumpEvent -= Jump;
         reader.RightClick -= PushAndPull;
-        reader.InteractEvent -= Interact;
+        //reader.InteractEvent -= Interact;
         reader.RightReleaseEvent -= Released;
     }
 
@@ -70,27 +72,27 @@ public class Movement : MonoBehaviour
 
     #endregion
 
-    #region Interact(E)
-    public void Interact()
-    {
-        RaycastHit2D hit = Physics2D.Raycast((Vector2)this.transform.position, lastDirection, .75f, interactableMask);
+    //#region Interact(E)
+    //public void Interact()
+    //{
+    //    RaycastHit2D hit = Physics2D.Raycast((Vector2)this.transform.position, lastDirection, .75f, interactableMask);
 
-        if (hit.collider != null)
-        {
-            Interactable i = hit.collider.gameObject.GetComponent<Interactable>();
-            if (i != null)
-            {
-                i.Event.Invoke(this);
-            }
-        }
-    }
-    #endregion
+    //    if (hit.collider != null)
+    //    {
+    //        Interactable i = hit.collider.gameObject.GetComponent<Interactable>();
+    //        if (i != null)
+    //        {
+    //            i.Event.Invoke(this);
+    //        }
+    //    }
+    //}
+    //#endregion
 
     #region Movement(WASD)
     public void Move(Vector2 direction)
     {
         dir.x = direction.x * moveSpeed;
-
+        
         if (direction != Vector2.zero)
         {
             lastDirection = direction;
@@ -148,7 +150,9 @@ public class Movement : MonoBehaviour
         {
             Debug.Log("get I get here?");
             BoxBeingDragged = hit.collider.gameObject;
-
+            Vector3 temp = this.transform.position;
+            temp.y = temp.y + yOffset;
+            BoxBeingDragged.transform.position = temp;
             BoxBeingDragged.GetComponent<FixedJoint2D>().enabled = true;
             BoxBeingDragged.GetComponent<FixedJoint2D>().connectedBody = this.GetComponent<Rigidbody2D>();
             reader.RightReleaseEvent += Released;

@@ -21,47 +21,7 @@ public class @InputController : IInputActionCollection, IDisposable
                 {
                     ""name"": ""Move"",
                     ""type"": ""Value"",
-                    ""id"": ""3e818aa0-283a-4e6c-aa7d-dee63b3be3d1"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""Drag"",
-                    ""type"": ""Button"",
-                    ""id"": ""d38066c8-b3c5-4d0b-be41-f84b00f9d16d"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""DragRelease"",
-                    ""type"": ""Button"",
-                    ""id"": ""9a63c94d-b517-477c-902e-5c8aeac5b86f"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""Shoot"",
-                    ""type"": ""Button"",
-                    ""id"": ""cd4e2369-4369-4a27-8a49-001e0de3d208"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""ShootRelease"",
-                    ""type"": ""Button"",
-                    ""id"": ""32fbda74-13bf-48cf-aa04-e82a43965e80"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""Point"",
-                    ""type"": ""PassThrough"",
-                    ""id"": ""38d172b4-6680-4da9-9424-9de73eaf346f"",
+                    ""id"": ""e00dec5e-9ae0-4385-8e6e-c8390ae770ca"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -75,114 +35,31 @@ public class @InputController : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Interact"",
+                    ""name"": ""Shoot"",
                     ""type"": ""Button"",
-                    ""id"": ""9882a65f-e4bf-4e60-9dea-cc292fe4b934"",
+                    ""id"": ""1c3a5581-8961-4882-be62-e0c228918778"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Point"",
+                    ""type"": ""Value"",
+                    ""id"": ""59aee94a-3e28-440d-a8a8-3da702265a8a"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Drag"",
+                    ""type"": ""Button"",
+                    ""id"": ""a8e86ad1-da9c-419c-b046-9f297e6e9cc7"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": ""WASD"",
-                    ""id"": ""be9783be-42ed-4207-ad41-1115d3f8ddda"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""e54dc773-ef71-463d-88a6-1e1538571e53"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""83b6db73-e6f1-4e7e-aa98-eda94d0f2e83"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""Arrow Keys"",
-                    ""id"": ""5b3c8cb8-9c7d-4001-97eb-64d87a5ca8ab"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""f01efdae-7cb2-48a1-9bdc-84e7de5cfb2a"",
-                    ""path"": ""<Keyboard>/leftArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""053b6379-57db-42bc-87ad-187612d342bb"",
-                    ""path"": ""<Keyboard>/rightArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""deb0a1ec-6853-48d9-838a-7d002fa22fb6"",
-                    ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": ""Press,Hold"",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Drag"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""996e374e-70bc-408c-affb-d184496f8fdd"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": ""Hold"",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Shoot"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""61f6557e-a5bf-4584-bdba-4f406546a554"",
-                    ""path"": ""<Mouse>/position"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Point"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
                 {
                     ""name"": """",
                     ""id"": ""6bcc348a-7926-4a52-97cc-0963471357bc"",
@@ -195,65 +72,52 @@ public class @InputController : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""e2a76985-ffad-4222-8855-4f5974734be5"",
-                    ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": ""Press(behavior=1)"",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""DragRelease"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""af80edce-de8d-4354-8b55-12124e5a96a7"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": ""Press(behavior=1)"",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ShootRelease"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""5a50dd96-a2b6-4e1b-9eb4-4249c54317d3"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""name"": ""WASD"",
+                    ""id"": ""ac1f41cc-7e31-4968-b5f2-2945d55165b9"",
+                    ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Interact"",
-                    ""isComposite"": false,
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
                     ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""UI"",
-            ""id"": ""8837a84e-b4a5-4ae0-ba72-7f33e63ea459"",
-            ""actions"": [
-                {
-                    ""name"": ""Point"",
-                    ""type"": ""Value"",
-                    ""id"": ""1b1bdba7-1e30-4ca5-9821-f3b28a805b64"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """"
                 },
                 {
-                    ""name"": ""Left Click"",
-                    ""type"": ""Button"",
-                    ""id"": ""907169bc-2308-41d8-aac5-990ce53c81b3"",
-                    ""expectedControlType"": ""Button"",
+                    ""name"": ""Left"",
+                    ""id"": ""b4564938-7adc-4f8e-969a-880cb9b84a9d"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
                     ""processors"": """",
-                    ""interactions"": ""Press""
-                }
-            ],
-            ""bindings"": [
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Right"",
+                    ""id"": ""029a3d3b-b9b1-4972-bf05-16559435cec6"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
                 {
                     ""name"": """",
-                    ""id"": ""6e9e4dbe-be61-4168-a958-8ad4e00ee402"",
+                    ""id"": ""1a87dd7f-2a82-4944-afb2-c68facfbd603"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d176bc93-4293-44d7-ba21-7c25d2888636"",
                     ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -264,12 +128,12 @@ public class @InputController : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""edb8bfcf-0d76-4cd1-b9f4-989fc0c5f8da"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""id"": ""b04fbd7b-b433-466f-b45c-9a3ee1ea9ecc"",
+                    ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Left Click"",
+                    ""action"": ""Drag"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -281,17 +145,10 @@ public class @InputController : IInputActionCollection, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
-        m_Player_Drag = m_Player.FindAction("Drag", throwIfNotFound: true);
-        m_Player_DragRelease = m_Player.FindAction("DragRelease", throwIfNotFound: true);
-        m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
-        m_Player_ShootRelease = m_Player.FindAction("ShootRelease", throwIfNotFound: true);
-        m_Player_Point = m_Player.FindAction("Point", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
-        m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
-        // UI
-        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
-        m_UI_Point = m_UI.FindAction("Point", throwIfNotFound: true);
-        m_UI_LeftClick = m_UI.FindAction("Left Click", throwIfNotFound: true);
+        m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
+        m_Player_Point = m_Player.FindAction("Point", throwIfNotFound: true);
+        m_Player_Drag = m_Player.FindAction("Drag", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -342,25 +199,19 @@ public class @InputController : IInputActionCollection, IDisposable
     private readonly InputActionMap m_Player;
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_Move;
-    private readonly InputAction m_Player_Drag;
-    private readonly InputAction m_Player_DragRelease;
-    private readonly InputAction m_Player_Shoot;
-    private readonly InputAction m_Player_ShootRelease;
-    private readonly InputAction m_Player_Point;
     private readonly InputAction m_Player_Jump;
-    private readonly InputAction m_Player_Interact;
+    private readonly InputAction m_Player_Shoot;
+    private readonly InputAction m_Player_Point;
+    private readonly InputAction m_Player_Drag;
     public struct PlayerActions
     {
         private @InputController m_Wrapper;
         public PlayerActions(@InputController wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
-        public InputAction @Drag => m_Wrapper.m_Player_Drag;
-        public InputAction @DragRelease => m_Wrapper.m_Player_DragRelease;
-        public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
-        public InputAction @ShootRelease => m_Wrapper.m_Player_ShootRelease;
-        public InputAction @Point => m_Wrapper.m_Player_Point;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
-        public InputAction @Interact => m_Wrapper.m_Player_Interact;
+        public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
+        public InputAction @Point => m_Wrapper.m_Player_Point;
+        public InputAction @Drag => m_Wrapper.m_Player_Drag;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -373,27 +224,18 @@ public class @InputController : IInputActionCollection, IDisposable
                 @Move.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
                 @Move.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
                 @Move.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
-                @Drag.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrag;
-                @Drag.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrag;
-                @Drag.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrag;
-                @DragRelease.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDragRelease;
-                @DragRelease.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDragRelease;
-                @DragRelease.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDragRelease;
-                @Shoot.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
-                @Shoot.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
-                @Shoot.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
-                @ShootRelease.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShootRelease;
-                @ShootRelease.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShootRelease;
-                @ShootRelease.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShootRelease;
-                @Point.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPoint;
-                @Point.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPoint;
-                @Point.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPoint;
                 @Jump.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
-                @Interact.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
-                @Interact.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
-                @Interact.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
+                @Shoot.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
+                @Shoot.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
+                @Shoot.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
+                @Point.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPoint;
+                @Point.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPoint;
+                @Point.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPoint;
+                @Drag.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrag;
+                @Drag.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrag;
+                @Drag.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrag;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -401,86 +243,28 @@ public class @InputController : IInputActionCollection, IDisposable
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
-                @Drag.started += instance.OnDrag;
-                @Drag.performed += instance.OnDrag;
-                @Drag.canceled += instance.OnDrag;
-                @DragRelease.started += instance.OnDragRelease;
-                @DragRelease.performed += instance.OnDragRelease;
-                @DragRelease.canceled += instance.OnDragRelease;
-                @Shoot.started += instance.OnShoot;
-                @Shoot.performed += instance.OnShoot;
-                @Shoot.canceled += instance.OnShoot;
-                @ShootRelease.started += instance.OnShootRelease;
-                @ShootRelease.performed += instance.OnShootRelease;
-                @ShootRelease.canceled += instance.OnShootRelease;
-                @Point.started += instance.OnPoint;
-                @Point.performed += instance.OnPoint;
-                @Point.canceled += instance.OnPoint;
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
-                @Interact.started += instance.OnInteract;
-                @Interact.performed += instance.OnInteract;
-                @Interact.canceled += instance.OnInteract;
+                @Shoot.started += instance.OnShoot;
+                @Shoot.performed += instance.OnShoot;
+                @Shoot.canceled += instance.OnShoot;
+                @Point.started += instance.OnPoint;
+                @Point.performed += instance.OnPoint;
+                @Point.canceled += instance.OnPoint;
+                @Drag.started += instance.OnDrag;
+                @Drag.performed += instance.OnDrag;
+                @Drag.canceled += instance.OnDrag;
             }
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
-
-    // UI
-    private readonly InputActionMap m_UI;
-    private IUIActions m_UIActionsCallbackInterface;
-    private readonly InputAction m_UI_Point;
-    private readonly InputAction m_UI_LeftClick;
-    public struct UIActions
-    {
-        private @InputController m_Wrapper;
-        public UIActions(@InputController wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Point => m_Wrapper.m_UI_Point;
-        public InputAction @LeftClick => m_Wrapper.m_UI_LeftClick;
-        public InputActionMap Get() { return m_Wrapper.m_UI; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
-        public void SetCallbacks(IUIActions instance)
-        {
-            if (m_Wrapper.m_UIActionsCallbackInterface != null)
-            {
-                @Point.started -= m_Wrapper.m_UIActionsCallbackInterface.OnPoint;
-                @Point.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnPoint;
-                @Point.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnPoint;
-                @LeftClick.started -= m_Wrapper.m_UIActionsCallbackInterface.OnLeftClick;
-                @LeftClick.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnLeftClick;
-                @LeftClick.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnLeftClick;
-            }
-            m_Wrapper.m_UIActionsCallbackInterface = instance;
-            if (instance != null)
-            {
-                @Point.started += instance.OnPoint;
-                @Point.performed += instance.OnPoint;
-                @Point.canceled += instance.OnPoint;
-                @LeftClick.started += instance.OnLeftClick;
-                @LeftClick.performed += instance.OnLeftClick;
-                @LeftClick.canceled += instance.OnLeftClick;
-            }
-        }
-    }
-    public UIActions @UI => new UIActions(this);
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
-        void OnDrag(InputAction.CallbackContext context);
-        void OnDragRelease(InputAction.CallbackContext context);
-        void OnShoot(InputAction.CallbackContext context);
-        void OnShootRelease(InputAction.CallbackContext context);
-        void OnPoint(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
-        void OnInteract(InputAction.CallbackContext context);
-    }
-    public interface IUIActions
-    {
+        void OnShoot(InputAction.CallbackContext context);
         void OnPoint(InputAction.CallbackContext context);
-        void OnLeftClick(InputAction.CallbackContext context);
+        void OnDrag(InputAction.CallbackContext context);
     }
 }
