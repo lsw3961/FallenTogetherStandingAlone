@@ -27,13 +27,14 @@ public class Movement : MonoBehaviour
     public LayerMask interactableMask;
     public LayerMask groundLayer;
 
-
+    private Animator animator;
     private List<Interactable> interactables;
     public GameObject BoxBeingDragged;
 
     #region Enable & Disable
     private void OnEnable()
     {
+        animator = GetComponent<Animator>();
         reader.MoveEvent += Move;
         reader.JumpEvent += Jump;
         reader.RightClick += PushAndPull;
@@ -92,21 +93,15 @@ public class Movement : MonoBehaviour
     public void Move(Vector2 direction)
     {
         dir.x = direction.x * moveSpeed;
-        
+
         if (direction != Vector2.zero)
         {
             lastDirection = direction;
+            animator.SetFloat("Horizontal", direction.x);
+
         }
+        animator.SetFloat("Speed", direction.sqrMagnitude);
 
-
-
-        if (direction != Vector2.zero)
-        {
-            //animator.SetFloat("Horizontal", direction.x);
-            //animator.SetFloat("Vertical", direction.y);
-        }
-
-        //animator.SetFloat("Speed", direction.sqrMagnitude);
 
 
 
