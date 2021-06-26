@@ -12,7 +12,8 @@ public class Movement : MonoBehaviour
     private float jumpForce = 1;
     [SerializeField]
     private float moveSpeed = 5;
-
+    private float airSpeed = 0;
+    private float groundSpeed = 0;
     [Header("Offsets")]
     [Tooltip("These are offsets for different functions")]
     [SerializeField]
@@ -50,7 +51,9 @@ public class Movement : MonoBehaviour
     #region Enable & Disable
     private void OnEnable()
     {
+        groundSpeed = moveSpeed;
         animator = GetComponent<Animator>();
+        airSpeed = moveSpeed / 2;
         reader.MoveEvent += Move;
         reader.JumpEvent += Jump;
         reader.RightClick += PushAndPull;
@@ -76,6 +79,15 @@ public class Movement : MonoBehaviour
     {
         dir.y = rb.velocity.y;
         rb.velocity = dir;
+
+        if (IsGrounded())
+        {
+            moveSpeed = groundSpeed;
+        }
+        else
+        {
+            moveSpeed = airSpeed;
+        }
 
 
 
@@ -109,6 +121,14 @@ public class Movement : MonoBehaviour
     #region Movement(WASD)
     public void Move(Vector2 direction)
     {
+        if (!IsGrounded())
+        {
+            //moveSpeed /= 2;
+        }
+        else
+        {
+            //moveSpeed *= 2;
+        }
         dir.x = direction.x * moveSpeed;
         if (direction != Vector2.zero)
         {
@@ -117,8 +137,22 @@ public class Movement : MonoBehaviour
 
         }
         //animator.SetFloat("Speed", direction.sqrMagnitude);
-
-
+        if (dir.x == 0)
+        {
+            animator.SetBool("isRunning", false);
+        }
+        else
+        {
+            animator.SetBool("isRunning", true);
+        }
+        if (direction.x < 0)
+        {
+            transform.eulerAngles = new Vector3(0, 0, 0);
+        }
+        else if (direction.x > 0)
+        {
+            transform.eulerAngles = new Vector3(0, 180, 0);
+        }
 
 
     }
@@ -131,6 +165,7 @@ public class Movement : MonoBehaviour
         if (IsGrounded())
         {
             //Debug.Log("Jump");
+            animator.SetTrigger("takeOff");
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
     }
@@ -143,10 +178,13 @@ public class Movement : MonoBehaviour
         if (Physics2D.Raycast(this.transform.position, Vector2.down, playerToGroundDistance,groundLayer.value)|| Physics2D.Raycast(this.transform.position, Vector2.down, playerToGroundDistance, dragable.value))
         {
             //Debug.Log("jump3");
+            animator.SetBool("isJumping", false);
             return true;
+
         }
         else
         {
+            animator.SetBool("isJumping", true);
             return false;
         }
     }
@@ -176,8 +214,13 @@ public class Movement : MonoBehaviour
     public void Released()
     {
         //Debug.Log("Testing");
-        jumpForce /= 2;
-        BoxBeingDragged.GetComponent<FixedJoint2D>().enabled = false;
+        if (BoxBeingDragged != null)
+        {
+            jumpForce /= 2;
+            BoxBeingDragged.GetComponent<FixedJoint2D>().enabled = false;
+            BoxBeingDragged = null;
+        }
+
     }
 
     #endregion
