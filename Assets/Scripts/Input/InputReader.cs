@@ -16,6 +16,7 @@ public class InputReader : ScriptableObject, InputController.IPlayerActions
     public event UnityAction LeftReleaseEvent = delegate { };
     public event UnityAction RightClick = delegate { };
     public event UnityAction RightReleaseEvent = delegate { };
+    public event UnityAction InteractEvent = delegate { };
 
     private InputController gameInput;
     private Vector2 mousePosition;
@@ -87,7 +88,13 @@ public class InputReader : ScriptableObject, InputController.IPlayerActions
             }
         }
 
+        public void OnInteract(InputAction.CallbackContext context)
+        {
+            if (context.phase == InputActionPhase.Performed)
+            {
+                InteractEvent.Invoke();
+            }
+        }
 
-        
 
 }

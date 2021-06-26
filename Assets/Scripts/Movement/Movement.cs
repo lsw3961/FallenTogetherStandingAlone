@@ -38,7 +38,7 @@ public class Movement : MonoBehaviour
         reader.MoveEvent += Move;
         reader.JumpEvent += Jump;
         reader.RightClick += PushAndPull;
-       // reader.InteractEvent += Interact;
+        reader.InteractEvent += Interact;
         //reader.Press += LMBPress;
 
 
@@ -49,7 +49,7 @@ public class Movement : MonoBehaviour
         reader.MoveEvent -= Move;
         reader.JumpEvent -= Jump;
         reader.RightClick -= PushAndPull;
-        //reader.InteractEvent -= Interact;
+        reader.InteractEvent -= Interact;
         reader.RightReleaseEvent -= Released;
     }
 
@@ -73,21 +73,21 @@ public class Movement : MonoBehaviour
 
     #endregion
 
-    //#region Interact(E)
-    //public void Interact()
-    //{
-    //    RaycastHit2D hit = Physics2D.Raycast((Vector2)this.transform.position, lastDirection, .75f, interactableMask);
+    #region Interact(E)
+    public void Interact()
+    {
+        RaycastHit2D hit = Physics2D.Raycast((Vector2)this.transform.position, lastDirection, .75f, interactableMask);
 
-    //    if (hit.collider != null)
-    //    {
-    //        Interactable i = hit.collider.gameObject.GetComponent<Interactable>();
-    //        if (i != null)
-    //        {
-    //            i.Event.Invoke(this);
-    //        }
-    //    }
-    //}
-    //#endregion
+        if (hit.collider != null)
+        {
+            Interactable i = hit.collider.gameObject.GetComponent<Interactable>();
+            if (i != null)
+            {
+                i.Event.Invoke(this);
+            }
+        }
+    }
+    #endregion
 
     #region Movement(WASD)
     public void Move(Vector2 direction)
