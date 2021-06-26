@@ -7,9 +7,9 @@ public class Response : ScriptableObject
 {
 
     [SerializeField]
-    string responseDialogue;
+    string responseDialogue = "";
     [SerializeField]
-    Dialogue dialogue;
+    Dialogue dialogue = null;
 
     public string ResponsibleDialogue
     {

@@ -4,32 +4,48 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class Movement : MonoBehaviour
 {
-
-    public Rigidbody2D rb;
-    public InputReader reader;
-
+    [Header("Basics")]
+    [Tooltip("These are the basic varaibles that are needed for movement")]
+    public Rigidbody2D rb = null;
+    public InputReader reader = null;
     [SerializeField]
-    private float distance;
-    public float moveSpeed = 5;
+    private float jumpForce = 1;
     [SerializeField]
-    private float yOffset;
+    private float moveSpeed = 5;
+
+    [Header("Offsets")]
+    [Tooltip("These are offsets for different functions")]
+    [SerializeField]
+    private float grabBoxDistance = 0;
+    [SerializeField]
+    private Vector3 offsetForGrabBox = Vector3.zero;
+    [SerializeField]
+    private float heightToHead = 0;
+    [SerializeField]
+    private float playerToGroundDistance = 0;
+
+
+    [Header("Layer Masks")]
+    [Tooltip("Layer Masks for ")]
+    [SerializeField]
+    private LayerMask dragable = 0;
+    [SerializeField]
+    private LayerMask interactableMask = 0;
+    [SerializeField]
+    private LayerMask groundLayer = 0;
+
+
+    [Header("External")]
+    [Tooltip("External Objects")]
+    public GameObject BoxBeingDragged;
+
+
     private Vector2 dir = Vector2.zero;
     private Vector2 lastDirection = Vector2.zero;
-
-    [SerializeField]
-    private float jumpForce;
-    [SerializeField]
-    private float playerToGroundDistance;
-
-    [SerializeField]
-    private LayerMask dragable;
-    [SerializeField]
-    public LayerMask interactableMask;
-    public LayerMask groundLayer;
-
     private Animator animator;
     private List<Interactable> interactables;
-    public GameObject BoxBeingDragged;
+
+
 
     #region Enable & Disable
     private void OnEnable()
@@ -68,7 +84,8 @@ public class Movement : MonoBehaviour
     public void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawRay(transform.position, lastDirection);
+        Gizmos.DrawRay(transform.position+offsetForGrabBox, lastDirection);
+        Gizmos.DrawRay(this.transform.position, Vector2.down);
     }
 
     #endregion
@@ -93,14 +110,13 @@ public class Movement : MonoBehaviour
     public void Move(Vector2 direction)
     {
         dir.x = direction.x * moveSpeed;
-
         if (direction != Vector2.zero)
         {
             lastDirection = direction;
-            animator.SetFloat("Horizontal", direction.x);
+            //animator.SetFloat("Horizontal", direction.x);
 
         }
-        animator.SetFloat("Speed", direction.sqrMagnitude);
+        //animator.SetFloat("Speed", direction.sqrMagnitude);
 
 
 
@@ -111,9 +127,10 @@ public class Movement : MonoBehaviour
     #region Jump(Spacebar)
     public void Jump()
     {
-        //Debug.Log("Jump");
+
         if (IsGrounded())
         {
+            //Debug.Log("Jump");
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
     }
@@ -122,7 +139,8 @@ public class Movement : MonoBehaviour
     {
         //Debug.Log("Jump2");
 
-        if (Physics2D.Raycast(this.transform.position, Vector2.down, playerToGroundDistance, groundLayer.value)|| Physics2D.Raycast(this.transform.position, Vector2.down, playerToGroundDistance, dragable.value))
+        
+        if (Physics2D.Raycast(this.transform.position, Vector2.down, playerToGroundDistance,groundLayer.value)|| Physics2D.Raycast(this.transform.position, Vector2.down, playerToGroundDistance, dragable.value))
         {
             //Debug.Log("jump3");
             return true;
@@ -139,25 +157,26 @@ public class Movement : MonoBehaviour
     public void PushAndPull()
     {
         Physics2D.queriesStartInColliders = false;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, lastDirection, distance, dragable);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position+offsetForGrabBox, lastDirection, grabBoxDistance, dragable);
 
         if (hit.collider != null)
         {
-            Debug.Log("get I get here?");
+            //Debug.Log("get I get here?");
             BoxBeingDragged = hit.collider.gameObject;
             Vector3 temp = this.transform.position;
-            temp.y = temp.y + yOffset;
+            temp.y = temp.y + heightToHead;
             BoxBeingDragged.transform.position = temp;
             BoxBeingDragged.GetComponent<FixedJoint2D>().enabled = true;
             BoxBeingDragged.GetComponent<FixedJoint2D>().connectedBody = this.GetComponent<Rigidbody2D>();
             reader.RightReleaseEvent += Released;
-
+            jumpForce *= 2;
         }
     }
 
     public void Released()
     {
-        Debug.Log("Testing");
+        //Debug.Log("Testing");
+        jumpForce /= 2;
         BoxBeingDragged.GetComponent<FixedJoint2D>().enabled = false;
     }
 

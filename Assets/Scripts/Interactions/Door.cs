@@ -6,14 +6,14 @@ public class Door : MonoBehaviour
 {
     public List<GameObject> triggers;
     [SerializeField]
-    private Vector2 distanceToMove;
-    private Vector2 finalLocation;
+    private Vector2 distanceToMove = Vector2.zero;
+    private Vector2 finalLocation = Vector2.zero;
     [SerializeField]
-    private Vector2 distance;
+    private Vector2 distance = Vector2.zero;
     private bool check;
     private bool finished = true;
     [SerializeField] [Range(-1,1)]
-    private float direction;
+    private float direction = 0;
     public void Awake()
     {
         finalLocation = (Vector2)transform.position + distanceToMove;

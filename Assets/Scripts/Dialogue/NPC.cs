@@ -5,9 +5,9 @@ using UnityEngine.UI;
 public class NPC : MonoBehaviour
 {
     [SerializeField] Dialogue dialogue;
-    [SerializeField] DialogueManager dialogueManager;
+    [SerializeField] DialogueManager dialogueManager = null;
     [SerializeField] private bool hasChatStarted = false;
-    [SerializeField] InputReader reader;
+    [SerializeField] InputReader reader = null;
 
     public void StartChat()
     {

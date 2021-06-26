@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 public class DialogueManager : MonoBehaviour
 {
-    [SerializeField] Text targetName;
-    [SerializeField] Text targetText;
+    [SerializeField] Text targetName = null;
+    [SerializeField] Text targetText = null;
     public Button option1;
     public Button option2;
     [Range(0f, 1f)]
@@ -17,7 +17,7 @@ public class DialogueManager : MonoBehaviour
     public Dialogue currentDialogue;
     int currentLineNum;
 
-    [SerializeField] InputReader reader;
+    [SerializeField] InputReader reader = null;
 
     public void FixedUpdate()
     {

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Slingshot : MonoBehaviour
 {
     [SerializeField]
-    private InputReader reader;
+    private InputReader reader = null;
     private GameObject newShot;
     public GameObject shot;
     public float launchForce;
