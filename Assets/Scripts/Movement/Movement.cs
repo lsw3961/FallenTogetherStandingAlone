@@ -156,8 +156,9 @@ public class Movement : MonoBehaviour
     {
         if (IsGrounded())
         {
-            animator.SetTrigger("takeOff");
+     
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            animator.SetTrigger("takeOff");
         }
     }
 
@@ -165,6 +166,7 @@ public class Movement : MonoBehaviour
     {
         if (Physics2D.Raycast(this.transform.position, Vector2.down, playerToGroundDistance,groundLayer.value)|| Physics2D.Raycast(this.transform.position, Vector2.down, playerToGroundDistance, dragable.value))
         {
+
             animator.SetBool("isJumping", false);
             return true;
         }
