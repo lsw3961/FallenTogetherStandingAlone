@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -3904415706263582234}
   - component: {fileID: -731346957891414427}
   - component: {fileID: 2769900045620435892}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Ammo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -161,4 +161,4 @@ MonoBehaviour:
   col: {fileID: -731346957891414427}
   mask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 3840

@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 
 
 [CreateAssetMenu(fileName ="Input Reader",menuName = "Input/Input Reader")]
-public class InputReader : ScriptableObject, InputController.IPlayerActions
+public class InputReader : ScriptableObject, InputController.IPlayerActions, InputController.IUIActions
 {
 
     public event UnityAction<Vector2> MoveEvent = delegate { };
@@ -17,6 +17,7 @@ public class InputReader : ScriptableObject, InputController.IPlayerActions
     public event UnityAction RightClick = delegate { };
     public event UnityAction RightReleaseEvent = delegate { };
     public event UnityAction InteractEvent = delegate { };
+    public event UnityAction Press = delegate { };
 
     private InputController gameInput;
     private Vector2 mousePosition;
@@ -34,17 +35,20 @@ public class InputReader : ScriptableObject, InputController.IPlayerActions
         {
             gameInput = new InputController();
             gameInput.Player.SetCallbacks(this);
+            gameInput.UI.SetCallbacks(this);
         }
         EnablePlayerInput();
     }
 
     public void EnablePlayerInput()
     {
+        gameInput.UI.Disable();
         gameInput.Player.Enable();
     }
     public void EnableDialogueInput()
     {
         gameInput.Player.Disable();
+        gameInput.UI.Enable();
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -93,6 +97,15 @@ public class InputReader : ScriptableObject, InputController.IPlayerActions
             if (context.phase == InputActionPhase.Performed)
             {
                 InteractEvent.Invoke();
+            }
+        }
+
+        public void OnLeftClick(InputAction.CallbackContext context)
+        {
+            if (context.phase == InputActionPhase.Performed)
+            {
+            Debug.Log("OnLeftClick Invoked");
+                Press.Invoke();
             }
         }
 

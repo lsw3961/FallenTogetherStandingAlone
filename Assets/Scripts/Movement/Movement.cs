@@ -58,7 +58,7 @@ public class Movement : MonoBehaviour
         reader.JumpEvent += Jump;
         reader.RightClick += PushAndPull;
         reader.InteractEvent += Interact;
-        //reader.Press += LMBPress;
+        reader.Press += LMBPress;
 
 
     }
@@ -105,10 +105,13 @@ public class Movement : MonoBehaviour
     #region Interact(E)
     public void Interact()
     {
-        RaycastHit2D hit = Physics2D.Raycast((Vector2)this.transform.position, lastDirection, .75f, interactableMask);
+        Debug.Log("Interact1");
+        RaycastHit2D hit = Physics2D.Raycast((Vector2)this.transform.position+(Vector2)offsetForGrabBox, lastDirection, .75f, interactableMask);
 
         if (hit.collider != null)
         {
+            Debug.Log("Interact2");
+
             Interactable i = hit.collider.gameObject.GetComponent<Interactable>();
             if (i != null)
             {
@@ -121,22 +124,12 @@ public class Movement : MonoBehaviour
     #region Movement(WASD)
     public void Move(Vector2 direction)
     {
-        if (!IsGrounded())
-        {
-            //moveSpeed /= 2;
-        }
-        else
-        {
-            //moveSpeed *= 2;
-        }
         dir.x = direction.x * moveSpeed;
         if (direction != Vector2.zero)
         {
             lastDirection = direction;
-            //animator.SetFloat("Horizontal", direction.x);
 
         }
-        //animator.SetFloat("Speed", direction.sqrMagnitude);
         if (dir.x == 0)
         {
             animator.SetBool("isRunning", false);
@@ -161,10 +154,8 @@ public class Movement : MonoBehaviour
     #region Jump(Spacebar)
     public void Jump()
     {
-
         if (IsGrounded())
         {
-            //Debug.Log("Jump");
             animator.SetTrigger("takeOff");
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
@@ -172,15 +163,10 @@ public class Movement : MonoBehaviour
 
     public bool IsGrounded()
     {
-        //Debug.Log("Jump2");
-
-        
         if (Physics2D.Raycast(this.transform.position, Vector2.down, playerToGroundDistance,groundLayer.value)|| Physics2D.Raycast(this.transform.position, Vector2.down, playerToGroundDistance, dragable.value))
         {
-            //Debug.Log("jump3");
             animator.SetBool("isJumping", false);
             return true;
-
         }
         else
         {
@@ -228,8 +214,8 @@ public class Movement : MonoBehaviour
     #region Continue(LMB)
     public void LMBPress()
     {
-        RaycastHit2D hit = Physics2D.Raycast((Vector2)this.transform.position, lastDirection, 1f, interactableMask);
-
+        RaycastHit2D hit = Physics2D.Raycast((Vector2)this.transform.position+(Vector2)offsetForGrabBox, lastDirection, 1f, interactableMask);
+        Debug.Log("continie");
         if (hit.collider != null)
         {
             Interactable i = hit.collider.gameObject.GetComponent<Interactable>();

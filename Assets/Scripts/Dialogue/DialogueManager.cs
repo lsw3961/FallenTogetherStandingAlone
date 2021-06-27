@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 public class DialogueManager : MonoBehaviour
 {
-    [SerializeField] Text targetName = null;
-    [SerializeField] Text targetText = null;
+    [SerializeField] TMP_Text targetName = null;
+    [SerializeField] TMP_Text targetText = null;
     public Button option1;
     public Button option2;
     [Range(0f, 1f)]
@@ -108,8 +109,8 @@ public class DialogueManager : MonoBehaviour
     public void SetButtons()
     {
         Debug.Log("Set buttons is being reached");
-        option1.GetComponentInChildren<Text>().text = currentDialogue.responses[0].ResponsibleDialogue;
-        option2.GetComponentInChildren<Text>().text = currentDialogue.responses[1].ResponsibleDialogue;
+        option1.GetComponentInChildren<TMP_Text>().text = currentDialogue.responses[0].ResponsibleDialogue;
+        option2.GetComponentInChildren<TMP_Text>().text = currentDialogue.responses[1].ResponsibleDialogue;
         ButtonHelper(true);
     }
 
