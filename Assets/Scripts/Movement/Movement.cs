@@ -45,7 +45,7 @@ public class Movement : MonoBehaviour
     private Vector2 lastDirection = Vector2.zero;
     private Animator animator;
     private List<Interactable> interactables;
-
+    private float draggedBoxMassHolder = 0;
 
 
     #region Enable & Disable
@@ -192,10 +192,11 @@ public class Movement : MonoBehaviour
             Vector3 temp = this.transform.position;
             temp.y = temp.y + heightToHead;
             BoxBeingDragged.transform.position = temp;
+            draggedBoxMassHolder=BoxBeingDragged.GetComponent<Rigidbody2D>().mass;
+            BoxBeingDragged.GetComponent<Rigidbody2D>().mass = 0.0001f;
             BoxBeingDragged.GetComponent<FixedJoint2D>().enabled = true;
             BoxBeingDragged.GetComponent<FixedJoint2D>().connectedBody = this.GetComponent<Rigidbody2D>();
             reader.RightReleaseEvent += Released;
-            jumpForce *= 2;
         }
     }
 
@@ -204,7 +205,7 @@ public class Movement : MonoBehaviour
         //Debug.Log("Testing");
         if (BoxBeingDragged != null)
         {
-            jumpForce /= 2;
+            BoxBeingDragged.GetComponent<Rigidbody2D>().mass = draggedBoxMassHolder;
             BoxBeingDragged.GetComponent<FixedJoint2D>().enabled = false;
             BoxBeingDragged = null;
         }
