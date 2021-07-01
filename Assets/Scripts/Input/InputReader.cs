@@ -18,6 +18,7 @@ public class InputReader : ScriptableObject, InputController.IPlayerActions, Inp
     public event UnityAction RightReleaseEvent = delegate { };
     public event UnityAction InteractEvent = delegate { };
     public event UnityAction Press = delegate { };
+    public event UnityAction JumpRelease = delegate { };
 
     private InputController gameInput;
     private Vector2 mousePosition;
@@ -61,6 +62,10 @@ public class InputReader : ScriptableObject, InputController.IPlayerActions, Inp
         if (context.phase == InputActionPhase.Performed)
         {
             JumpEvent.Invoke();
+        }
+        if (context.phase == InputActionPhase.Canceled)
+        {
+            JumpRelease.Invoke();
         }
     }
 

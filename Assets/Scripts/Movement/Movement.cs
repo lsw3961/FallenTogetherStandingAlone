@@ -10,6 +10,8 @@ public class Movement : MonoBehaviour
     public InputReader reader = null;
     [SerializeField]
     private float jumpForce = 1;
+    public float hangtime = .2f;
+    private float hangCounter = 0f;
     [SerializeField]
     private float moveSpeed = 5;
     private float airSpeed = 0;
@@ -40,6 +42,8 @@ public class Movement : MonoBehaviour
     [Tooltip("External Objects")]
     public GameObject BoxBeingDragged;
 
+    public ParticleSystem footsteps;
+    private ParticleSystem.EmissionModule footEmission;
 
     private Vector2 dir = Vector2.zero;
     private Vector2 lastDirection = Vector2.zero;
@@ -51,6 +55,7 @@ public class Movement : MonoBehaviour
     #region Enable & Disable
     private void OnEnable()
     {
+        footEmission = footsteps.emission;
         groundSpeed = moveSpeed;
         animator = GetComponent<Animator>();
         airSpeed = moveSpeed / 2;
@@ -59,6 +64,7 @@ public class Movement : MonoBehaviour
         reader.RightClick += PushAndPull;
         reader.InteractEvent += Interact;
         reader.Press += LMBPress;
+        reader.JumpRelease += JumpRelease;
 
 
     }
@@ -67,6 +73,7 @@ public class Movement : MonoBehaviour
     {
         reader.MoveEvent -= Move;
         reader.JumpEvent -= Jump;
+        reader.JumpRelease -= JumpRelease;
         reader.RightClick -= PushAndPull;
         reader.InteractEvent -= Interact;
         reader.RightReleaseEvent -= Released;
@@ -82,15 +89,23 @@ public class Movement : MonoBehaviour
 
         if (IsGrounded())
         {
-            moveSpeed = groundSpeed;
+            hangCounter = hangtime;
+            //moveSpeed = groundSpeed;
         }
         else
         {
-            moveSpeed = airSpeed;
+            hangCounter -= Time.deltaTime;
+            //moveSpeed = airSpeed;
         }
 
-
-
+        if (dir.x != 0 && IsGrounded())
+        {
+            footEmission.rateOverTime = 35;
+        }
+        else
+        {
+            footEmission.rateOverTime = 0;
+        }
     }
 
     public void OnDrawGizmos()
@@ -154,14 +169,21 @@ public class Movement : MonoBehaviour
     #region Jump(Spacebar)
     public void Jump()
     {
-        if (IsGrounded())
+
+        if (hangCounter > 0f && rb.velocity.y < .0001)
         {
-     
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             animator.SetTrigger("takeOff");
         }
     }
+    public void JumpRelease()
+    {
+        if (rb.velocity.y>0)
+        {
 
+            rb.AddForce(Vector2.down * jumpForce/5, ForceMode2D.Impulse);
+        }
+    }
     public bool IsGrounded()
     {
         if (Physics2D.Raycast(this.transform.position, Vector2.down, playerToGroundDistance,groundLayer.value)|| Physics2D.Raycast(this.transform.position, Vector2.down, playerToGroundDistance, dragable.value))
