@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 
-[CreateAssetMenu(fileName ="Input Reader",menuName = "Input/Input Reader")]
+[CreateAssetMenu(fileName = "Input Reader", menuName = "Input/Input Reader")]
 public class InputReader : ScriptableObject, InputController.IPlayerActions, InputController.IUIActions
 {
 
@@ -19,6 +19,7 @@ public class InputReader : ScriptableObject, InputController.IPlayerActions, Inp
     public event UnityAction InteractEvent = delegate { };
     public event UnityAction Press = delegate { };
     public event UnityAction JumpRelease = delegate { };
+    public event UnityAction<float> Swap = delegate { };
 
     private InputController gameInput;
     private Vector2 mousePosition;
@@ -85,34 +86,39 @@ public class InputReader : ScriptableObject, InputController.IPlayerActions, Inp
             LeftReleaseEvent.Invoke();
         }
     }
-        public void OnDrag(InputAction.CallbackContext context)
+    public void OnDrag(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
         {
-            if (context.phase == InputActionPhase.Performed)
-            {
-                RightClick.Invoke();
-            }
-            if (context.phase == InputActionPhase.Canceled)
-            {
-                RightReleaseEvent.Invoke();
-            }
+            RightClick.Invoke();
         }
-
-        public void OnInteract(InputAction.CallbackContext context)
+        if (context.phase == InputActionPhase.Canceled)
         {
-            if (context.phase == InputActionPhase.Performed)
-            {
-                InteractEvent.Invoke();
-            }
+            RightReleaseEvent.Invoke();
         }
+    }
 
-        public void OnLeftClick(InputAction.CallbackContext context)
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
         {
-            if (context.phase == InputActionPhase.Performed)
-            {
-            Debug.Log("OnLeftClick Invoked");
-                Press.Invoke();
-            }
+            InteractEvent.Invoke();
         }
+    }
 
+    public void OnLeftClick(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+        {
+            Press.Invoke();
+        }
+    }
 
+    public void OnSwap(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+        {
+            Swap.Invoke(context.ReadValue<float>());
+        }
+    }
 }

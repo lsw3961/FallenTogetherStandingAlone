@@ -5,15 +5,16 @@ using UnityEngine;
 public class Door : MonoBehaviour
 {
     public List<GameObject> triggers;
+
+    [SerializeField]
+    private float timeToMove = 0;
     [SerializeField]
     private Vector2 distanceToMove = Vector2.zero;
     private Vector2 finalLocation = Vector2.zero;
-    [SerializeField]
-    private Vector2 distance = Vector2.zero;
     private bool check;
     private bool finished = true;
-    [SerializeField] [Range(-1,1)]
-    private float direction = 0;
+
+
     public void Awake()
     {
         finalLocation = (Vector2)transform.position + distanceToMove;
@@ -47,21 +48,7 @@ public class Door : MonoBehaviour
     {
         if ((Vector2)transform.position != finalLocation)
         {
-           // Debug.Log("Final Location has not been reached");
-            if (direction <= 0)
-            {
-                //Debug.Log("Moving Negativly");
-                Vector3 temp = transform.position;
-                temp.x -= distance.x;
-                transform.position = temp;
-            }
-            else
-            {
-                //Debug.Log("Moving Positivly");
-                Vector3 temp = transform.position;
-                temp.x += distance.x;
-                transform.position = temp;
-            }
+            transform.position = Vector3.Lerp(transform.position, finalLocation, timeToMove);
         }
         else { finished = false; }
         
