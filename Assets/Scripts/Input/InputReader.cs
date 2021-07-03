@@ -80,7 +80,6 @@ public class InputReader : ScriptableObject, InputController.IPlayerActions, Inp
         {
             LeftClick.Invoke();
         }
-
         if (context.phase == InputActionPhase.Canceled)
         {
             LeftReleaseEvent.Invoke();
