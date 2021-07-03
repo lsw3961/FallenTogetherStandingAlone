@@ -90,7 +90,6 @@ public class GrapplingGun : MonoBehaviour
     {
         if (leftIsPressed)
         {
-            Debug.Log("Left is Pressed");
             if (grappleRope.enabled)
             {
                 RotateGun(grapplePoint, false);
@@ -103,11 +102,14 @@ public class GrapplingGun : MonoBehaviour
 
             if (launchToPoint && grappleRope.isGrappling)
             {
+                Debug.Log("reached");
                 if (launchType == LaunchType.Transform_Launch)
                 {
+                    Debug.Log("fillipino");
+                    Debug.Log(gunHolder.position);
                     Vector2 firePointDistnace = firePoint.position - gunHolder.localPosition;
                     Vector2 targetPos = grapplePoint - firePointDistnace;
-                    gunHolder.position = Vector2.Lerp(gunHolder.position, targetPos, Time.deltaTime * launchSpeed);
+                    gunHolder.position = Vector3.Lerp(gunHolder.position, targetPos, Time.deltaTime * launchSpeed);
                 }
             }
         }
