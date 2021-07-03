@@ -70,6 +70,7 @@ public class GrapplingRope : MonoBehaviour
             }
             else
             {
+                Debug.Log("Hey Im being reached");
                 DrawRopeWaves();
             }
         }
@@ -98,21 +99,20 @@ public class GrapplingRope : MonoBehaviour
 
     void DrawRopeWaves()
     {
-        Debug.Log("draw Rope");
         for (int i = 0; i < percision; i++)
         {
             float delta = (float)i / ((float)percision - 1f);
             Vector2 offset = Vector2.Perpendicular(grapplingGun.grappleDistanceVector).normalized * ropeAnimationCurve.Evaluate(delta) * waveSize;
             Vector2 targetPosition = Vector2.Lerp(grapplingGun.firePoint.position, grapplingGun.grapplePoint, delta) + offset;
-            Vector2 currentPosition = Vector2.Lerp(grapplingGun.firePoint.position, targetPosition, ropeProgressionCurve.Evaluate(moveTime) * ropeProgressionSpeed);
-
+            Vector3 currentPosition = Vector2.Lerp(grapplingGun.firePoint.position, targetPosition, ropeProgressionCurve.Evaluate(moveTime) * ropeProgressionSpeed);
             m_lineRenderer.SetPosition(i, currentPosition);
+            Debug.Log(m_lineRenderer.GetPosition(i));
         }
     }
 
     void DrawRopeNoWaves()
     {
-        Debug.Log("something");
+        Debug.Log("No Waves");
         m_lineRenderer.SetPosition(0, grapplingGun.firePoint.position);
         m_lineRenderer.SetPosition(1, grapplingGun.grapplePoint);
     }

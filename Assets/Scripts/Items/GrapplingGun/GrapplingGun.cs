@@ -12,6 +12,7 @@ public class GrapplingGun : MonoBehaviour
     [Header("Layers Settings:")]
     [SerializeField] private bool grappleToAll = false;
     [SerializeField] private int grappableLayerNumber = 9;
+    [SerializeField] private LayerMask LayerMask;
 
     [Header("Main Camera:")]
     public Camera m_camera;
@@ -49,6 +50,9 @@ public class GrapplingGun : MonoBehaviour
     [SerializeField] private float targetDistance = 3;
     [SerializeField] private float targetFrequncy = 1;
 
+    [Header("Misc")]
+    [SerializeField] private float gravity = 1;
+
     [HideInInspector] public Vector2 grapplePoint;
     [HideInInspector] public Vector2 grappleDistanceVector;
 
@@ -81,7 +85,7 @@ public class GrapplingGun : MonoBehaviour
 
         grappleRope.enabled = false;
         m_springJoint2D.enabled = false;
-        m_rigidbody.gravityScale = 1;
+        m_rigidbody.gravityScale = gravity;
         reader.LeftReleaseEvent -= LeftRelease;
         leftIsPressed = false;
     }
@@ -102,10 +106,8 @@ public class GrapplingGun : MonoBehaviour
 
             if (launchToPoint && grappleRope.isGrappling)
             {
-                Debug.Log("reached");
                 if (launchType == LaunchType.Transform_Launch)
                 {
-                    Debug.Log("fillipino");
                     Debug.Log(gunHolder.position);
                     Vector2 firePointDistnace = firePoint.position - gunHolder.localPosition;
                     Vector2 targetPos = grapplePoint - firePointDistnace;
@@ -139,19 +141,16 @@ public class GrapplingGun : MonoBehaviour
     {
         Vector2 distanceVector = m_camera.ScreenToWorldPoint(reader.MousePosition) - gunPivot.position;
         
-        if (Physics2D.Raycast(firePoint.position, distanceVector))
+        if (Physics2D.Raycast(firePoint.position, distanceVector, maxDistnace, LayerMask))
         {
-            Debug.Log("Hit1");
-            RaycastHit2D _hit = Physics2D.Raycast(firePoint.position, distanceVector);
-            Debug.Log(_hit.transform.gameObject);
+            RaycastHit2D _hit = Physics2D.Raycast(firePoint.position, distanceVector, maxDistnace, LayerMask);
+            Debug.Log(_hit.transform.gameObject.layer);
             if (_hit.transform.gameObject.layer == grappableLayerNumber || grappleToAll)
             {
-                Debug.Log("Hit2");
-
+                Debug.Log("Hit 2");
                 if (Vector2.Distance(_hit.point, firePoint.position) <= maxDistnace || !hasMaxDistance)
                 {
-                    Debug.Log("Hit3");
-
+                    Debug.Log("hit3");
                     grapplePoint = _hit.point;
                     grappleDistanceVector = grapplePoint - (Vector2)gunPivot.position;
                     grappleRope.enabled = true;
