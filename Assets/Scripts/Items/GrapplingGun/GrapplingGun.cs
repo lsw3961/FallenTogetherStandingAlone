@@ -70,6 +70,7 @@ public class GrapplingGun : MonoBehaviour
     }
     public void OnDisable()
     {
+        reader.LeftClick -= LeftPress;
         reader.LeftClick -= LeftRelease;
     }
     public void LeftPress()

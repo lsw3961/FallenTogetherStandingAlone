@@ -5,16 +5,27 @@ using UnityEngine.SceneManagement;
 public class PlayerDiesOnLayer : MonoBehaviour
 {
     [SerializeField]
+    private int lifeCounter = 3;
+    [SerializeField]
+    private Transform respawnPoint;
+    [SerializeField]
+    private Transform player;
+    [SerializeField]
     private LayerMask layer;
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(layer.value);
-        Debug.Log(collision.gameObject.layer);
         if (collision.IsTouchingLayers(layer))
         {
-            Debug.Log("Hit");
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex,LoadSceneMode.Single);
+            if (lifeCounter <= 0)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
+                return;
+            }
+            lifeCounter--;
+            player.transform.position = respawnPoint.transform.position;
+            Physics2D.SyncTransforms();
         }
     }
 }
