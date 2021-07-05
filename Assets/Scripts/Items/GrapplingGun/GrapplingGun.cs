@@ -144,13 +144,10 @@ public class GrapplingGun : MonoBehaviour
         if (Physics2D.Raycast(firePoint.position, distanceVector, maxDistnace, LayerMask))
         {
             RaycastHit2D _hit = Physics2D.Raycast(firePoint.position, distanceVector, maxDistnace, LayerMask);
-            Debug.Log(_hit.transform.gameObject.layer);
             if (_hit.transform.gameObject.layer == grappableLayerNumber || grappleToAll)
             {
-                Debug.Log("Hit 2");
                 if (Vector2.Distance(_hit.point, firePoint.position) <= maxDistnace || !hasMaxDistance)
                 {
-                    Debug.Log("hit3");
                     grapplePoint = _hit.point;
                     grappleDistanceVector = grapplePoint - (Vector2)gunPivot.position;
                     grappleRope.enabled = true;

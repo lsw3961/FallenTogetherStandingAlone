@@ -5,6 +5,8 @@ using UnityEngine;
 public class DoorTrigger : MonoBehaviour
 {
     [SerializeField]
+    private LayerMask layer;
+    [SerializeField]
     private bool open = false;
 
     public bool Open
@@ -14,6 +16,9 @@ public class DoorTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        open = true;
+        if (collision.IsTouchingLayers(layer))
+        {
+            open = true;
+        }
     }
 }
