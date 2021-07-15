@@ -10,13 +10,11 @@ public class PlayerDiesOnLayer : MonoBehaviour
     private Transform respawnPoint;
     [SerializeField]
     private Transform player;
-    [SerializeField]
-    private LayerMask layer;
 
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.IsTouchingLayers(layer))
+        if (collision.CompareTag("Player"))
         {
             if (lifeCounter <= 0)
             {
