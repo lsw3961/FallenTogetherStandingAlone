@@ -9,6 +9,9 @@ public class Movement : MonoBehaviour
     public Rigidbody2D rb = null;
     public InputReader reader = null;
     [SerializeField]
+    [Range(0.01f, 1.0f)]
+    private float jumpComparisonTime = 0.0f;
+    [SerializeField]
     private float jumpForce = 1;
     public float hangtime = .2f;
     private float hangCounter = 0f;
@@ -171,7 +174,7 @@ public class Movement : MonoBehaviour
     #region Jump(Spacebar)
     public void Jump()
     {
-        if (hangCounter > 0f && rb.velocity.y < .3f)
+        if (hangCounter > 0f && rb.velocity.y < jumpComparisonTime)
         {
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             animator.SetTrigger("takeOff");

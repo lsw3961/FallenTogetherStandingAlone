@@ -9,7 +9,7 @@ public class Slingshot : MonoBehaviour
     public GameObject shot;
     public float launchForce;
     public Transform shotPoint;
-
+    [SerializeField] ParticleSystem shoot;
     public Transform target;
     float lookAngle = 0;
     public void FixedUpdate()
@@ -32,6 +32,8 @@ public class Slingshot : MonoBehaviour
     public void Fire()
     {
         GameObject newShot = Instantiate(shot, shotPoint.position, Quaternion.Euler(0, 0, lookAngle));
+        shoot.Play();
+        newShot.GetComponent<SpriteRenderer>().color = Random.ColorHSV();
         newShot.GetComponent<Rigidbody2D>().velocity = shotPoint.right * launchForce;
     }
 
