@@ -12,6 +12,10 @@ public class Movement : MonoBehaviour
     [Range(0.01f, 1.0f)]
     private float jumpComparisonTime = 0.0f;
     [SerializeField]
+    private float jumpBufferLength = .1f;
+    [SerializeField]
+    private float jumpBufferCount = 0f;
+    [SerializeField]
     private float jumpForce = 1;
     public float hangtime = .2f;
     private float hangCounter = 0f;
@@ -111,6 +115,16 @@ public class Movement : MonoBehaviour
         {
             footEmission.rateOverTime = 0;
         }
+
+        jumpBufferCount -= Time.deltaTime;
+
+        if (hangCounter > 0f && jumpBufferCount >= 0 && Mathf.Abs(rb.velocity.y) < jumpComparisonTime)
+        {
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            jumpBufferCount = -1f;
+            hangCounter = -1f;
+            animator.SetTrigger("takeOff");
+        }
     }
 
     public void OnDrawGizmos()
@@ -174,11 +188,14 @@ public class Movement : MonoBehaviour
     #region Jump(Spacebar)
     public void Jump()
     {
-        if (hangCounter > 0f && rb.velocity.y < jumpComparisonTime)
-        {
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-            animator.SetTrigger("takeOff");
-        }
+        jumpBufferCount = jumpBufferLength;
+        //if (hangCounter > 0f && jumpBufferCount>=0 && Mathf.Abs(rb.velocity.y) < jumpComparisonTime)
+        //{
+        //    rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        //    jumpBufferCount = -1f;
+        //    hangCounter = -1f;
+        //    animator.SetTrigger("takeOff");
+        //}
     }
     public void JumpRelease()
     {

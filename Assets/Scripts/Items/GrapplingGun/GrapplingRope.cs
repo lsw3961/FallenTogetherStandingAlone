@@ -20,7 +20,10 @@ public class GrapplingRope : MonoBehaviour
     [Header("Rope Progression:")]
     public AnimationCurve ropeProgressionCurve;
     [SerializeField] [Range(1, 50)] private float ropeProgressionSpeed = 1;
-
+    [Header("LineRopeEnd")]
+    [SerializeField] private GameObject stickyHand;
+    private GameObject SH;
+    private bool stickyHandOn = false;
     float moveTime = 0;
 
     [HideInInspector] public bool isGrappling = true;
@@ -37,12 +40,19 @@ public class GrapplingRope : MonoBehaviour
         LinePointsToFirePoint();
 
         m_lineRenderer.enabled = true;
+        if (!stickyHandOn)
+        {
+            SH = Instantiate(stickyHand, grapplingGun.grapplePoint, Quaternion.identity);
+            stickyHandOn = true;
+        }
     }
 
     private void OnDisable()
     {
         m_lineRenderer.enabled = false;
         isGrappling = false;
+        Destroy(SH);
+        stickyHandOn = false;
     }
 
     private void LinePointsToFirePoint()
@@ -104,12 +114,15 @@ public class GrapplingRope : MonoBehaviour
             Vector2 offset = Vector2.Perpendicular(grapplingGun.grappleDistanceVector).normalized * ropeAnimationCurve.Evaluate(delta) * waveSize;
             Vector2 targetPosition = Vector2.Lerp(grapplingGun.firePoint.position, grapplingGun.grapplePoint, delta) + offset;
             Vector3 currentPosition = Vector2.Lerp(grapplingGun.firePoint.position, targetPosition, ropeProgressionCurve.Evaluate(moveTime) * ropeProgressionSpeed);
+            currentPosition.z = grapplingGun.firePoint.transform.position.z;
+            SH.transform.SetPositionAndRotation(currentPosition,Quaternion.identity);
             m_lineRenderer.SetPosition(i, currentPosition);
         }
     }
 
     void DrawRopeNoWaves()
     {
+
         m_lineRenderer.SetPosition(0, grapplingGun.firePoint.position);
         m_lineRenderer.SetPosition(1, grapplingGun.grapplePoint);
     }
